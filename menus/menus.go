@@ -11,11 +11,11 @@ func MainMenu() {
 	fmt.Println("===================================")
 	fmt.Println("==        Gestión Stripe         ==")
 	fmt.Println("===================================")
-	fmt.Println("1 - Lista de productos")
-	fmt.Println("2 - Añadir nuevo producto")
-	fmt.Println("3 - Listar todos los precios")
-	fmt.Println("4 - Buscar producto por ID")
-	fmt.Println("5 - Borrar producto")
+	fmt.Println(" 1 - Lista de productos")
+	fmt.Println(" 2 - Añadir nuevo producto")
+	fmt.Println(" 3 - Listar todos los precios")
+	fmt.Println(" 4 - Buscar producto por ID")
+	fmt.Println(" 5 - Borrar producto")
 	fmt.Println("===================================")
 	fmt.Print("Seleccionar opción : ")
 	var option int
@@ -39,5 +39,7 @@ func MainMenu() {
 		productDeleted := products.DeleteProduct(productItem)
 		views.ViewConfirmDeleted(productDeleted)
 		MainMenu()
+	case 6:
+		products.GetProductPriseById("aa")
 	}
 }

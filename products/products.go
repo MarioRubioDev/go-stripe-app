@@ -15,6 +15,16 @@ func GetProductById(productId string) *stripe.Product {
 	return p
 }
 
+func GetProductPriseById(productId string) int64 {
+	stripe.Key = stripeKey
+	params := &stripe.PriceListParams{
+		Product: stripe.String(productId),
+	}
+	prices := price.List(params)
+	productsPrise := prices.PriceList().Data[0].UnitAmount
+	return productsPrise
+}
+
 func GetAllProducts() *product.Iter {
 	stripe.Key = stripeKey
 	params := &stripe.ProductListParams{}
@@ -23,18 +33,7 @@ func GetAllProducts() *product.Iter {
 	return i
 }
 
-func SetProductPrice(id string, newprice int64) {
-	stripe.Key = stripeKey
-	params := &stripe.PriceParams{
-		Currency:   stripe.String(string(stripe.CurrencyEUR)),
-		Product:    stripe.String(id),
-		UnitAmount: stripe.Int64(newprice),
-	}
-	p, _ := price.New(params)
-	fmt.Println(p)
-}
-
-func SetPriceById(priceId string) int64 {
+func GetPriceById(priceId string) int64 {
 	stripe.Key = stripeKey
 	p, _ := price.Get(priceId, nil)
 	return p.UnitAmount
@@ -49,6 +48,17 @@ func GetAllPrices() {
 		p := i.Price()
 		fmt.Println(p)
 	}
+}
+
+func SetProductPrice(id string, newprice int64) {
+	stripe.Key = stripeKey
+	params := &stripe.PriceParams{
+		Currency:   stripe.String(string(stripe.CurrencyEUR)),
+		Product:    stripe.String(id),
+		UnitAmount: stripe.Int64(newprice),
+	}
+	p, _ := price.New(params)
+	fmt.Println(p)
 }
 
 func AddNewStripeArticle(name string, descrition string) string {
