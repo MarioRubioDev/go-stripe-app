@@ -80,10 +80,11 @@ func GetAllPaymentIntent() {
 	pi := paymentintent.List(params)
 	for pi.Next() {
 		s := pi.PaymentIntent()
-		fmt.Println(s.ID, " ", s.Status, " ", s.AmountReceived, " ", s.ClientSecret)
+		fmt.Println(s.ID, " ", s.Status, " ", s.AmountReceived, " ", s.ConfirmationMethod)
 	}
 }
 
+// -----------------------------
 func SetProductPrice(id string, newprice int64) {
 	stripe.Key = stripeKey
 	params := &stripe.PriceParams{
