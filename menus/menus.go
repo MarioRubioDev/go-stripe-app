@@ -16,6 +16,9 @@ func MainMenu() {
 	fmt.Println(" 3 - Listar todos los precios")
 	fmt.Println(" 4 - Buscar producto por ID")
 	fmt.Println(" 5 - Borrar producto")
+	fmt.Println(" 6 - Enlace de pago")
+	fmt.Println(" 7 - Checkout Sessions")
+	fmt.Println(" 8 - Payment Intent")
 	fmt.Println("===================================")
 	fmt.Print("Seleccionar opción : ")
 	var option int
@@ -40,6 +43,13 @@ func MainMenu() {
 		views.ViewConfirmDeleted(productDeleted)
 		MainMenu()
 	case 6:
-		products.GetProductPriseById("aa")
+		products.GetAllPaymentLinks()
+		MainMenu()
+	case 7:
+		products.GetAllCheckoutSessions()
+		MainMenu()
+	case 8:
+		products.GetAllPaymentIntent()
+		MainMenu()
 	}
 }

@@ -2,7 +2,11 @@ package products
 
 import (
 	"fmt"
+
 	"github.com/stripe/stripe-go/v75"
+	"github.com/stripe/stripe-go/v75/checkout/session"
+	"github.com/stripe/stripe-go/v75/paymentintent"
+	"github.com/stripe/stripe-go/v75/paymentlink"
 	"github.com/stripe/stripe-go/v75/price"
 	"github.com/stripe/stripe-go/v75/product"
 )
@@ -47,6 +51,36 @@ func GetAllPrices() {
 	for i.Next() {
 		p := i.Price()
 		fmt.Println(p)
+	}
+}
+
+func GetAllPaymentLinks() {
+	stripe.Key = stripeKey
+	params := &stripe.PaymentLinkListParams{}
+	i := paymentlink.List(params)
+	for i.Next() {
+		pl := i.PaymentLink().ID
+		fmt.Println(pl)
+	}
+}
+
+func GetAllCheckoutSessions() {
+	stripe.Key = stripeKey
+	params := &stripe.CheckoutSessionListParams{}
+	i := session.List(params)
+	for i.Next() {
+		s := i.CheckoutSession()
+		fmt.Println(s.ID + " " + string(s.PaymentStatus) + " " + string(s.Status))
+	}
+}
+
+func GetAllPaymentIntent() {
+	stripe.Key = stripeKey
+	params := &stripe.PaymentIntentListParams{}
+	pi := paymentintent.List(params)
+	for pi.Next() {
+		s := pi.PaymentIntent()
+		fmt.Println(s.ID, " ", s.Status, " ", s.AmountReceived, " ", s.ClientSecret)
 	}
 }
 
