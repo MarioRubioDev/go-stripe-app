@@ -1,4 +1,4 @@
-package main
+package views
 
 import (
 	"fmt"
@@ -6,12 +6,12 @@ import (
 	"github.com/stripe/stripe-go/v75/product"
 )
 
-func viewProduct(product *stripe.Product) {
+func ViewProduct(product *stripe.Product) {
 	fmt.Println("ID del producto: " + product.ID)
 	fmt.Println("Nombre : " + product.Name)
 }
 
-func viewAllProducts(listProduct *product.Iter) {
+func ViewAllProducts(listProduct *product.Iter) {
 	for listProduct.Next() {
 		p := listProduct.Product()
 		fmt.Println("-------------------------------")
@@ -22,7 +22,7 @@ func viewAllProducts(listProduct *product.Iter) {
 	}
 }
 
-func viewConfirmDeleted(product *stripe.Product) {
+func ViewConfirmDeleted(product *stripe.Product) {
 	fmt.Println("------Producto Eliminado -----------")
 	fmt.Println("ID Articulo : ", product.ID)
 	fmt.Println("Estado eliminación :", product.Deleted)

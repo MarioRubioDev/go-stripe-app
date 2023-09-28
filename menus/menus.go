@@ -1,8 +1,13 @@
-package main
+package menus
 
-import "fmt"
+import (
+	"fmt"
+	"go-stripe-app/forms"
+	"go-stripe-app/products"
+	"go-stripe-app/views"
+)
 
-func mainMenu() {
+func MainMenu() {
 	fmt.Println("===================================")
 	fmt.Println("==        Gestión Stripe         ==")
 	fmt.Println("===================================")
@@ -17,21 +22,22 @@ func mainMenu() {
 	fmt.Scanln(&option)
 	switch option {
 	case 1:
-		products := getAllProducts()
-		viewAllProducts(products)
-		mainMenu()
+		productsItems := products.GetAllProducts()
+		views.ViewAllProducts(productsItems)
+		MainMenu()
 	case 2:
-		formNewProduct()
+		forms.FormNewProduct()
 	case 3:
-		getAllPrices()
+		products.GetAllPrices()
+		MainMenu()
 	case 4:
-		product := getProductById(formGetProductById())
-		viewProduct(product)
-		mainMenu()
+		productItem := products.GetProductById(forms.FormGetProductById())
+		views.ViewProduct(productItem)
+		MainMenu()
 	case 5:
-		product := formDeleteProduct()
-		productDeleted := deleteProduct(product)
-		viewConfirmDeleted(productDeleted)
-		mainMenu()
+		productItem := forms.FormDeleteProduct()
+		productDeleted := products.DeleteProduct(productItem)
+		views.ViewConfirmDeleted(productDeleted)
+		MainMenu()
 	}
 }

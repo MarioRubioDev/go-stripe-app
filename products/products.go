@@ -1,4 +1,4 @@
-package main
+package products
 
 import (
 	"fmt"
@@ -7,13 +7,15 @@ import (
 	"github.com/stripe/stripe-go/v75/product"
 )
 
-func getProductById(productId string) *stripe.Product {
+var stripeKey string = "sk_test_51NuCt8AtwzxFIRkS8szHAlTfX3vcwu6gBA13z3uiFG3i6y3DcUrJF7yKh9ez4ZG1KR033dLlYb62bKPElgHgsbKU00zTU41ZOg"
+
+func GetProductById(productId string) *stripe.Product {
 	stripe.Key = stripeKey
 	p, _ := product.Get(productId, nil)
 	return p
 }
 
-func getAllProducts() *product.Iter {
+func GetAllProducts() *product.Iter {
 	stripe.Key = stripeKey
 	params := &stripe.ProductListParams{}
 	params.Filters.AddFilter("limit", "", "3")
@@ -21,7 +23,7 @@ func getAllProducts() *product.Iter {
 	return i
 }
 
-func setProductPrice(id string, newprice int64) {
+func SetProductPrice(id string, newprice int64) {
 	stripe.Key = stripeKey
 	params := &stripe.PriceParams{
 		Currency:   stripe.String(string(stripe.CurrencyEUR)),
@@ -32,13 +34,13 @@ func setProductPrice(id string, newprice int64) {
 	fmt.Println(p)
 }
 
-func getPriceById(priceId string) int64 {
+func SetPriceById(priceId string) int64 {
 	stripe.Key = stripeKey
 	p, _ := price.Get(priceId, nil)
 	return p.UnitAmount
 }
 
-func getAllPrices() {
+func GetAllPrices() {
 	stripe.Key = stripeKey
 	params := &stripe.PriceListParams{}
 	params.Filters.AddFilter("limit", "", "3")
@@ -47,10 +49,9 @@ func getAllPrices() {
 		p := i.Price()
 		fmt.Println(p)
 	}
-	mainMenu()
 }
 
-func addNewStripeArticle(name string, descrition string) string {
+func AddNewStripeArticle(name string, descrition string) string {
 	stripe.Key = stripeKey
 	params := &stripe.ProductParams{
 		Active:      stripe.Bool(true),
@@ -63,7 +64,7 @@ func addNewStripeArticle(name string, descrition string) string {
 	return p.ID
 }
 
-func deleteProduct(productId string) *stripe.Product {
+func DeleteProduct(productId string) *stripe.Product {
 	stripe.Key = stripeKey
 	p, err := product.Del(productId, nil)
 	if err != nil {
