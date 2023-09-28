@@ -1,4 +1,4 @@
-module go-stripe-test
+module go-stripe-app
 
 go 1.21.1
 
