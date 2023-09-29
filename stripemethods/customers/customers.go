@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"github.com/stripe/stripe-go/v75"
 	"github.com/stripe/stripe-go/v75/customer"
+	"go-stripe-app/stripemethods"
 )
 
-var stripeKey string = "sk_test_51NuCt8AtwzxFIRkS8szHAlTfX3vcwu6gBA13z3uiFG3i6y3DcUrJF7yKh9ez4ZG1KR033dLlYb62bKPElgHgsbKU00zTU41ZOg"
+var stripeKey string = stripemethods.DotEnvVariable("STRIPE_KEY")
 
 type CustomerApp struct {
 	ID       string `json:"id"`
