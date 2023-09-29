@@ -2,9 +2,9 @@ package menus
 
 import (
 	"fmt"
-	"go-stripe-app/customers"
 	"go-stripe-app/forms"
-	"go-stripe-app/products"
+	"go-stripe-app/stripemethods/customers"
+	"go-stripe-app/stripemethods/products"
 	"go-stripe-app/views"
 )
 

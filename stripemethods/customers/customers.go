@@ -2,7 +2,6 @@ package customers
 
 import (
 	"fmt"
-
 	"github.com/stripe/stripe-go/v75"
 	"github.com/stripe/stripe-go/v75/customer"
 )
@@ -41,11 +40,9 @@ func AddNewCustomer(NewCustomerData CustomerApp) {
 	}
 	AddNewAppCustomer(NewCustomerData)
 }
-
 func AddNewStripeCustomer(c CustomerApp) string {
 	return ""
 }
-
 func AddNewAppCustomer(data CustomerApp) {
 
 }

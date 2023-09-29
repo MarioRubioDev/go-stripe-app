@@ -3,7 +3,7 @@ package forms
 import (
 	"bufio"
 	"fmt"
-	"go-stripe-app/products"
+	"go-stripe-app/stripemethods/products"
 	"os"
 	"strconv"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/stripe/stripe-go/v75"
 	"github.com/stripe/stripe-go/v75/product"
-	"go-stripe-app/products"
+	"go-stripe-app/stripemethods/products"
 )
 
 func ViewProduct(product *stripe.Product) {
