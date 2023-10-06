@@ -16,14 +16,12 @@ func ViewProduct(product *stripe.Product) {
 }
 
 func ViewAllProducts(listProduct *product.Iter) {
+	fmt.Println("<------------------------------->")
+	fmt.Printf("ID Producto\t Nombre\t Descripcion\t Precio\n")
 	for listProduct.Next() {
 		p := listProduct.Product()
-		fmt.Println("<------------------------------->")
-		fmt.Println("ID Articulo : ", p.ID)
-		fmt.Println("Nonmbre : ", p.Name)
-		fmt.Println("Descripción : ", p.Description)
-		fmt.Println("ID Precio : ", float64(products.GetProductPriseById(p.ID))/100)
-		fmt.Println("<------------------------------->")
+		productPrice := float64(products.GetProductPriseById(p.ID) / 100)
+		fmt.Printf("%s\t %s\t %s\t %f\n", p.ID, p.Name, p.Description, productPrice)
 	}
 }
 

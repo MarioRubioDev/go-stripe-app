@@ -27,15 +27,6 @@ func FormNewPrice() {
 
 }
 
-func FormNewProduct() {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf("Nombre : ")
-	name, _, _ := reader.ReadLine()
-	fmt.Printf("Descripcion : ")
-	description, _, _ := reader.ReadLine()
-	newArticleId := products.AddNewStripeArticle(string(name), string(description))
-	println("Se ha creado un nuevo artículo con ID : ", newArticleId)
-}
 func FormDeleteProduct() string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("ID del producto: ")

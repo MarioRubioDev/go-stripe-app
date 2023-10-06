@@ -2,14 +2,13 @@ package products
 
 import (
 	"fmt"
-	"go-stripe-app/stripemethods"
-
 	"github.com/stripe/stripe-go/v75"
 	"github.com/stripe/stripe-go/v75/checkout/session"
 	"github.com/stripe/stripe-go/v75/paymentintent"
 	"github.com/stripe/stripe-go/v75/paymentlink"
 	"github.com/stripe/stripe-go/v75/price"
 	"github.com/stripe/stripe-go/v75/product"
+	"go-stripe-app/stripemethods"
 )
 
 var stripeKey string = stripemethods.DotEnvVariable("STRIPE_KEY")
@@ -97,17 +96,34 @@ func SetProductPrice(id string, newprice int64) {
 	fmt.Println(p)
 }
 
-func AddNewStripeArticle(name string, descrition string) string {
+type StripeProduct struct {
+	Name        string
+	Description string
+	PriceValue  int64
+}
+
+// name: Product name.
+// description: Product description.
+// priceValue: Product price ( in cents...without decimals).
+func AddNewStripeProduct(p StripeProduct) (string, string) {
 	stripe.Key = stripeKey
-	params := &stripe.ProductParams{
+	product_params := &stripe.ProductParams{
 		Active:      stripe.Bool(true),
-		Description: stripe.String(descrition),
-		Name:        stripe.String(name),
-		Shippable:   stripe.Bool(false),
-		Type:        stripe.String("good"),
+		Name:        stripe.String(p.Name),
+		Description: stripe.String(p.Description),
+		TaxCode:     stripe.String("txcd_20030000"),
+		Type:        stripe.String("service"),
 	}
-	p, _ := product.New(params)
-	return p.ID
+	newProductInfo, _ := product.New(product_params)
+
+	price_params := &stripe.PriceParams{
+		BillingScheme: stripe.String("per_unit"),
+		Currency:      stripe.String(string(stripe.CurrencyEUR)),
+		Product:       stripe.String(newProductInfo.ID),
+		UnitAmount:    stripe.Int64(p.PriceValue),
+	}
+	newPriceInfo, _ := price.New(price_params)
+	return newProductInfo.ID, newPriceInfo.ID
 }
 
 func DeleteProduct(productId string) *stripe.Product {
