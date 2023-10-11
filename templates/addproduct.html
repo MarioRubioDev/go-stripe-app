@@ -25,11 +25,20 @@
             </div>
         </div>
     </nav>
-    <section class="py-4 py-xl-5">
+    <section class="py-1 py-xl-1" style="max-width: 800px;margin: auto;">
         <div class="container">
             <div class="text-center p-4 p-lg-5">
-                <h1 class="fw-bold mb-4">Gestión de Stripe</h1>
+                <h1 class="fw-bold mb-4">Productos</h1>
             </div>
+        </div>
+    </section>
+    <section style="max-width: 500px;margin: auto;">
+        <div class="container">
+            <form action="/addproduct" method="post">
+                <div><label class="form-label" for="name">Nombre del producto</label><input class="form-control" type="text" id="name" name="name" placeholder="nombre del producto"></div>
+                <div><label class="form-label" for="description">Descripción del producto</label><input class="form-control" type="text" id="description" name="description" placeholder="descripción"></div>
+                <div><label class="form-label" for="price">Precio</label><input class="form-control" type="number" id="price" name="price" value="0.0" step="any" min="0.0"></div><input class="btn btn-primary" type="submit">
+            </form>
         </div>
     </section>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

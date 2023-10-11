@@ -3,7 +3,7 @@ package forms
 import (
 	"bufio"
 	"fmt"
-	"go-stripe-app/stripemethods/products"
+	"go-stripe-app/stripemethods/productMethods"
 	"os"
 )
 
@@ -20,13 +20,13 @@ func FormNewProduct() {
 	fmt.Scanln(&priceValue)
 	priceValue = priceValue * 100
 
-	var newProduct products.StripeProduct = products.StripeProduct{
+	var newProduct productMethods.StripeProduct = productMethods.StripeProduct{
 		Name:        name,
 		Description: description,
 		PriceValue:  int64(priceValue),
 	}
 
-	newProductInfo, newPriceInfo := products.AddNewStripeProduct(newProduct)
+	newProductInfo, newPriceInfo := productMethods.AddNewStripeProduct(newProduct)
 	println("Se ha creado un nuevo artículo con ID : ", newProductInfo)
 	println("Se ha creado un precio con ID : ", newPriceInfo)
 }

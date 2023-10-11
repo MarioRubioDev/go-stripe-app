@@ -1,4 +1,4 @@
-package products
+package productMethods
 
 import (
 	"fmt"
@@ -12,6 +12,43 @@ import (
 )
 
 var stripeKey string = stripemethods.DotEnvVariable("STRIPE_KEY")
+
+type StripeProduct struct {
+	Name        string
+	Description string
+	PriceValue  int64
+}
+
+// name: Product name.
+// description: Product description.
+// priceValue: Product price ( in cents...without decimals).
+func AddNewStripeProduct(p StripeProduct) (string, string) {
+	stripe.Key = stripeKey
+	productParams := &stripe.ProductParams{
+		Active:      stripe.Bool(true),
+		Name:        stripe.String(p.Name),
+		Description: stripe.String(p.Description),
+		TaxCode:     stripe.String("txcd_20030000"),
+		Type:        stripe.String("service"),
+	}
+	newProduct, _ := product.New(productParams)
+
+	priceParams := &stripe.PriceParams{
+		BillingScheme: stripe.String("per_unit"),
+		Currency:      stripe.String(string(stripe.CurrencyEUR)),
+		Product:       stripe.String(newProduct.ID),
+		UnitAmount:    stripe.Int64(p.PriceValue),
+	}
+	newPrice, _ := price.New(priceParams)
+	return newProduct.ID, newPrice.ID
+}
+
+func GetAllProducts() *product.Iter {
+	stripe.Key = stripeKey
+	params := &stripe.ProductListParams{}
+	i := product.List(params)
+	return i
+}
 
 func GetProductById(productId string) *stripe.Product {
 	stripe.Key = stripeKey
@@ -27,14 +64,6 @@ func GetProductPriseById(productId string) int64 {
 	prices := price.List(params)
 	productsPrise := prices.PriceList().Data[0].UnitAmount
 	return productsPrise
-}
-
-func GetAllProducts() *product.Iter {
-	stripe.Key = stripeKey
-	params := &stripe.ProductListParams{}
-	params.Filters.AddFilter("limit", "", "3")
-	i := product.List(params)
-	return i
 }
 
 func GetPriceById(priceId string) int64 {
@@ -94,36 +123,6 @@ func SetProductPrice(id string, newprice int64) {
 	}
 	p, _ := price.New(params)
 	fmt.Println(p)
-}
-
-type StripeProduct struct {
-	Name        string
-	Description string
-	PriceValue  int64
-}
-
-// name: Product name.
-// description: Product description.
-// priceValue: Product price ( in cents...without decimals).
-func AddNewStripeProduct(p StripeProduct) (string, string) {
-	stripe.Key = stripeKey
-	product_params := &stripe.ProductParams{
-		Active:      stripe.Bool(true),
-		Name:        stripe.String(p.Name),
-		Description: stripe.String(p.Description),
-		TaxCode:     stripe.String("txcd_20030000"),
-		Type:        stripe.String("service"),
-	}
-	newProductInfo, _ := product.New(product_params)
-
-	price_params := &stripe.PriceParams{
-		BillingScheme: stripe.String("per_unit"),
-		Currency:      stripe.String(string(stripe.CurrencyEUR)),
-		Product:       stripe.String(newProductInfo.ID),
-		UnitAmount:    stripe.Int64(p.PriceValue),
-	}
-	newPriceInfo, _ := price.New(price_params)
-	return newProductInfo.ID, newPriceInfo.ID
 }
 
 func DeleteProduct(productId string) *stripe.Product {

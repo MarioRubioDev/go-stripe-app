@@ -3,7 +3,7 @@ package forms
 import (
 	"bufio"
 	"fmt"
-	"go-stripe-app/stripemethods/products"
+	"go-stripe-app/stripemethods/productMethods"
 	"os"
 	"strconv"
 )
@@ -23,7 +23,7 @@ func FormNewPrice() {
 	price, _ := reader.ReadString('\n')
 	var newPrice int64
 	newPrice, _ = strconv.ParseInt(price, 10, 64)
-	products.SetProductPrice(stripeId, newPrice)
+	productMethods.SetProductPrice(stripeId, newPrice)
 
 }
 

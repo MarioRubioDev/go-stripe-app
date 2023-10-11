@@ -3,7 +3,7 @@ package menus
 import (
 	"fmt"
 	"go-stripe-app/forms"
-	"go-stripe-app/stripemethods/products"
+	"go-stripe-app/stripemethods/productMethods"
 	"go-stripe-app/views"
 )
 
@@ -22,13 +22,13 @@ func ProductsMenu() {
 	fmt.Scanln(&option)
 	switch option {
 	case 1:
-		productsItems := products.GetAllProducts()
+		productsItems := productMethods.GetAllProducts()
 		views.ViewAllProducts(productsItems)
 		ProductsMenu()
 	case 2:
 		forms.FormNewProduct()
 	case 3:
-		productItem := products.GetProductById(forms.FormGetProductById())
+		productItem := productMethods.GetProductById(forms.FormGetProductById())
 		views.ViewProduct(productItem)
 		ProductsMenu()
 	case 0:
